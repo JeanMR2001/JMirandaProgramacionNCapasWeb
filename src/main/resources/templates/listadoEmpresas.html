@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
+      layout:decorate="~{layout}">
+    
+    <body layout:fragment="body">
+        
+        <br/>
+        <br/>
+        <div class="card bg-primary text-white">
+            <h1 class="card-header" align="center">Listado Empresa</h1>
+
+        </div>
+        <br/>
+        
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <a th:href="@{/empresa/form/{idempresa}(idempresa=0)}" class="btn btn-success">Add
+            </a>
+        </div>
+        <br>
+        <div class="container">
+        <table class="table table-dark table-striped" align="center">
+            
+            <thead>
+                <tr>
+                    <th scope="col">Delete</th>
+                    <th scope="col">IdEmpresa</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Dirección Web</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="empresa, iterStat : ${lempresas}">
+                    <td>
+                        <!--                        <i class="bi bi-trash-fill"></i>-->
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" th:data-bs-target="'#exampleModal' + ${iterStat.index}">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                    <td th:text="${empresa.idempresa}"></td>
+                    <td>
+                            <div th:if="${empresa.imagen != null}">
+                                <img th:src="'data:text/html;base64,' + ${empresa.imagen}" alt="Imagen de usuario" width="70" height="auto"/>
+                            </div>
+                            <div th:unless="${empresa.imagen != null}">   
+                                <img src="/Image/default.png" width="70" height="auto"/> 
+                            </div>
+                        </td>
+                    <td th:text="${empresa.nombre}"></td>
+                    <td th:text="${empresa.telefono}"></td>
+                    <td th:text="${empresa.email}"></td>
+                    <td th:text="${empresa.direccionweb}"></td>
+                    <td>
+                        <a th:href="@{/empresa/form/{idempresa}(idempresa=${empresa.idempresa})}" class="btn btn-outline-warning">
+
+                            <i class="bi bi-pencil-fill"i></
+                        </a>
+                    </td>
+                    
+                    <div class="modal fade" th:id="'exampleModal' + ${iterStat.index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Estas seguro de querer eliminar a la empresa: <span th:text="${empresa.nombre}"></span>?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <a th:href="@{/empresa/eliminar/{idempresa}(idempresa=${empresa.idempresa})}" class="btn btn-danger">Confirmar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+                
+            </tbody>
+            
+        </table>
+        </div>
+    </body>
+</html>
+
+

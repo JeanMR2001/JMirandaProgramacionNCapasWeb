@@ -1,0 +1,502 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
+      layout:decorate="~{layout}">
+
+    <body layout:fragment="body">
+        <br/>
+        <br/>
+        <div class="card bg-success text-white">
+            <h1 class="card-header" align="center">FORM USER</h1>
+
+        </div>
+        <br/>
+        <h1 align="center">Datos Personales</h1>
+        <hr>
+        <form th:action="@{/usuario/form}" method="post" th:object="${usuariodireccion}" enctype="multipart/form-data">
+
+            <input type="hidden" th:field="*{usuario.idusuario}">
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col order-first">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-badge-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Username" onblur="validarCampo('username', 'lblUserName')" id="username" name="username" th:field="*{usuario.username}"/>
+                        </div>
+                        <label id="lblUserName"></label>
+                    </div>
+
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Nombre" onkeypress="return sololetras(event, 'lblNombre')" onblur="validarCampo('nombre', 'lblNombre')" id="nombre" name="nombre" th:field="*{usuario.nombre}"/>
+                        </div>
+                        <label id="lblNombre"></label>
+                    </div>
+
+                    <div class="col order-last">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-vcard-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Apellido Paterno" onkeypress="return sololetras(event, 'lblApellidoP')" onblur="validarCampo('apellidopaterno', 'lblApellidoP')" id="apellidopaterno" name="apellidopaterno" th:field="*{usuario.apellidopaterno}"/>
+                        </div>
+                        <label id="lblApellidoP"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col order-first">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-vcard-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Apellido Materno" onkeypress="return sololetras(event, 'lblApellidoM')" id="apellidomaterno" name="apellidomaterno" th:field="*{usuario.apellidomaterno}"/>
+                        </div>
+                        <label id="lblApellidoM"></label>
+                    </div>
+
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" placeholder="E-mail" onblur="validarCampo('email', 'lblEmail')" id="email" name="email" th:field="*{usuario.email}"/>
+                        </div>
+                        <label id="lblEmail"></label>
+                    </div>
+
+                    <div class="col order-last">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" placeholder="Confirmar E-mail" onblur="validarCorreo()" id="emailC" name="emailC"/>
+                        </div>
+                        <label id="lblEmailC"></label>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+
+
+                    <div class="col order-first">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-unlock-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Password" oninput="borrarMensajeError()" onblur="checkPassword()" id="password" name="password" th:field="*{usuario.password}"/>
+                        </div>
+                        <label id="lblPassword"></label>
+                    </div>
+
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar-week"></i></span>
+                            <input type="date" class="form-control" placeholder="Fecha de Nacimiento" onblur="validarCampo('fechanacimiento', 'lblFecha')" id="fechanacimiento" name="fechanacimiento" th:field="*{usuario.fechanacimiento}"/>
+                        </div>
+                        <label id="lblFecha"></label>
+                    </div>
+
+                    <div class="col order-last">
+
+                        <div class="input-group mb-3">
+                            <!--                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-gender-ambiguous"></i></span>-->
+
+                            <div th:if="${usuariodireccion.usuario.sexo == 'H '}">                            
+                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}" th:checked="${sexoH}"/>
+                                <label class="btn btn-outline-success" for="success-outlined">Hombre</label>
+                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}"/>
+                                <label class="btn btn-outline-danger" for="danger-outlined">Mujer</label> 
+                            </div>
+                            <div th:unless="${usuariodireccion.usuario.sexo == 'H '}">
+                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}"/>
+                                <label class="btn btn-outline-success" for="success-outlined">Hombre</label>
+                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}" th:checked="${sexoM}"/>
+                                <label class="btn btn-outline-danger" for="danger-outlined">Mujer</label>   
+                            </div>
+                            <!--                            <div class="btn-group" data-toggle="buttons">
+                                                            <label class="btn btn-warning active">
+                                                                <input type="radio" name="genero" id="genero_hombre" autocomplete="off" th:value="H" th:field="*{usuario.sexo}" th:checked="${usuariodireccion.usuario.sexo == 'H'}">Hombre
+                                                            </label>
+                                                            <label class="btn btn-warning">
+                                                                <input type="radio" name="genero" id="genero_mujer" autocomplete="off" th:value="M" th:field="*{usuario.sexo}" th:checked="${usuariodireccion.usuario.sexo == 'M'}">Mujer
+                                                            </label>
+                                                        </div>-->
+
+
+
+                            <!--                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-gender-ambiguous"></i></span>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" id="Hombre" name="sexo" th:field="*{usuario.sexo}" th:value="H" th:attr="checked=${usuariodireccion.usuario.sexo == 'H'}"/>
+                                                            <label class="form-check-label" for="Hombre">Hombre</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" id="Mujer" name="sexo" th:field="*{usuario.sexo}" th:value="M" />
+                                                            <label class="form-check-label" for="Mujer">Mujer</label>
+                                                        </div>-->
+                            <!--                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-gender-ambiguous"></i></span>
+                                                        <input type="text" class="form-control" placeholder="Sexo" id="sexo" name="sexo" th:field="*{usuario.sexo}"/>-->
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col order-first">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Telefono" onkeypress="return validarNumeros(event, 'telefono', 'lblTelefono')" id="telefono" name="telefono" th:field="*{usuario.telefono}"/>
+                        </div>
+                        <label id="lblTelefono"></label>
+                    </div>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-phone-vibrate"></i></span>
+                            <input type="text" class="form-control" placeholder="Celular" onkeypress="return validarNumeros(event, 'celular', 'lblCelular')" onblur="validarCampo('celular', 'lblCelular')" id="celular" name="celular" th:field="*{usuario.celular}"/>
+                        </div>
+                        <label id="lblCelular"></label>
+                    </div>
+
+                    <div class="col order-last">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" placeholder="CURP" onkeypress="return validarCaracteresCurp(event, 'lblCurp')" onblur="validarCampo('curp', 'lblCurp')" id="curp" name="curp" th:field="*{usuario.curp}"/>
+                        </div>
+                        <label id="lblCurp"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-badge-fill"></i></span>
+                            <select class="form-select" aria-label="Default select example" name="rol.nombre" th:field="*{usuario.rol.idrol}">
+                                <!--                    <option selected>Open this select menu</option>-->
+                                <option value="0">Seleccione el rol</option>
+                                <option th:each="rol : ${roles}" th:value="${rol.idrol}" th:text="${rol.nombre}"></option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="imagenFile">Imagen:</label>
+                            <input type="file" class="form-control" name="imagenFile" id="imagenFile" onchange="mostrarVistaPrevia(event)">
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <i class="bi bi-file-image-fill"></i>
+                            <div th:if="${usuariodireccion.usuario.imagen != null}">
+                                <img id="vistaPrevia" th:src="'data:text/html;base64,' + ${usuariodireccion.usuario.imagen}" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;">
+                            </div>
+                            <div th:unless="${usuariodireccion.usuario.imagen != null}">
+                                <img id="vistaPrevia" src="/Image/default.png" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <br/>
+            <h1 align="center">Datos Direccion</h1>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-asterisk"></i></span>
+                            <select class="form-select" aria-label="Default select example" name="direccion.colonia.municipio.estado.pais.idpais" id="ddlPais" th:field="*{direccion.colonia.municipio.estado.pais.idpais}">
+                                <!--                    <option selected>Open this select menu</option>-->
+                                <option value="0">Seleccione su Pais</option>
+                                <option th:each="pais : ${paises}" th:value="${pais.idpais}" th:text="${pais.nombre}"></option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col">
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-asterisk"></i></span>
+                            <select th:if="${estados == null}" class="form-select" aria-label="Default select example" name="direccion.colonia.municipio.estado.idestado" id="ddlEstado" th:field="*{direccion.colonia.municipio.estado.idestado}">
+                                <!--                    <option selected>Open this select menu</option>-->
+                                <option value="0">Seleccione su Estado</option>
+                            </select>
+                            <select th:unless="${estados == null}" class="form-select" aria-label="Default select example" name="direccion.colonia.municipio.estado.idestado" id="ddlEstado" th:field="*{direccion.colonia.municipio.estado.idestado}">
+                                <option th:each="estado : ${estados}" th:value="${estado.idestado}" th:text="${estado.nombre}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col">
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-asterisk"></i></span>
+                            <select th:if="${municipios == null}" class="form-select" aria-label="Default select example" name="direccion.colonia.municipio.idMunicipio" id="ddlMunicipio" th:field="*{direccion.colonia.municipio.idMunicipio}">
+                                <!--                    <option selected>Open this select menu</option>-->
+                                <option value="0">Seleccione su Municipio</option>
+                            </select>
+                            <select th:unless="${municipios == null}" class="form-select" aria-label="Default select example" name="direccion.colonia.municipio.idMunicipio" id="ddlMunicipio" th:field="*{direccion.colonia.municipio.idMunicipio}">
+                                <option th:each="municipio : ${municipios}" th:value="${municipio.idMunicipio}" th:text="${municipio.nombre}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-asterisk"></i></span>
+                            <select th:if="${colonias == null}" class="form-select" aria-label="Default select example" name="direccion.colonia.idcolonia" id="ddlColonia" th:field="*{direccion.colonia.idcolonia}">
+                                <!--                    <option selected>Open this select menu</option>-->
+                                <option value="0">Seleccione su Colonia</option>
+                            </select>
+                            <select th:unless="${colonias == null}" class="form-select" aria-label="Default select example" name="direccion.colonia.idcolonia" id="ddlColonia" th:field="*{direccion.colonia.idcolonia}">
+                                <!--                    <option selected>Open this select menu</option>-->
+                                <option th:each="colonia : ${colonias}" th:value="${colonia.idcolonia}" th:text="${colonia.nombre}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <input type="hidden" th:field="*{direccion.iddireccion}">
+
+                    <div class="col order-first">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-bezier2"></i></span>
+                            <input type="text" class="form-control" placeholder="Calle" onblur="validarCampo('calle', 'lblCalle')" id="calle" name="calle" th:field="*{direccion.calle}"/>
+                        </div>
+                        <label id="lblCalle"></label>
+                    </div>
+
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-123"></i></span>
+                            <input type="text" class="form-control" placeholder="Numero Interior" onblur="validarCampo('numerointerior', 'lblNumeroInt')" id="numerointerior" name="numerointerior" th:field="*{direccion.numerointerior}"/>
+                        </div>
+                        <label id="lblNumeroInt"></label>
+                    </div>
+
+                    <div class="col order-last">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-123"></i></span>
+                            <input type="text" class="form-control" placeholder="Numero Exterior"  id="numeroexterior" name="numeroexterior" th:field="*{direccion.numeroexterior}"/>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <input type="submit" value="Guardar" class="btn btn-outline-success"/>
+            </div>
+
+        </form>
+    </body>
+</html>
+
+<script>
+    function sololetras(e, lbl) {
+        var letters = /^[A-Za-z]+$/;
+        var key = e.key;
+        if (key.match(letters))
+        {
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else {
+            document.getElementById(lbl).innerHTML = "Solo letras";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+
+    function checkPassword() {
+        var myregex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        var password = document.getElementById("password").value;
+
+
+        if (password.match(myregex)) {
+            document.getElementById("lblPassword").innerHTML = "EL password es valido";
+            $("#lblPassword").css('color', 'green');
+            return true;
+
+        } else {
+            document.getElementById("lblPassword").innerHTML = "EL password debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y al menos un carácter especial";
+            $("#lblPassword").css('color', 'red');
+            return false;
+        }
+    }
+
+    function borrarMensajeError() {
+        var mensajeError = document.getElementById("lblPassword");
+        mensajeError.textContent = ""; // Borra el mensaje de error
+    }
+
+    function validarNumeros(evt, name, lbl) {
+
+        // code is the decimal ASCII representation of the pressed key.
+        var code = (evt.which) ? evt.which : evt.keyCode;
+        var phoneNumber = document.getElementById(name).value;
+
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57 && phoneNumber.length < 10) { // is a number.
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else { // other keys.
+            document.getElementById(lbl).innerHTML = "Solo puede ingresar números y un máximo de 10 digitos";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+
+    function validarCaracteresCurp(evt, lbl) {
+
+        // code is the decimal ASCII representation of the pressed key.
+        var code = (evt.which) ? evt.which : evt.keyCode;
+        var curp = document.getElementById("curp").value;
+
+        if (code == 8) {
+            return true;
+        } else if (code >= 48 && code <= 57) { // is a number.
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else if (code >= 65 && code <= 90 && curp.length < 18) {
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else {
+            document.getElementById(lbl).innerHTML = "El CURP debe tener 18 caracteres";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+
+    function validarCampo(name, lbl) {
+        var valorCampo = document.getElementById(name).value;
+
+        if (valorCampo.trim() == "") {
+
+            document.getElementById(lbl).textContent = "Este campo no puede estar vacío";
+            document.getElementById(lbl).style.color = "red";
+            return false;
+        } else {
+
+            document.getElementById(lbl).textContent = "";
+            return true;
+        }
+    }
+
+    function validarCorreo() {
+        var email1 = document.getElementById("email").value;
+        var email2 = document.getElementById("emailC").value;
+
+        if (email1 != email2) {
+            document.getElementById("lblEmailC").textContent = "Los email´s no coinciden";
+            document.getElementById("lblEmailC").style.color = "red";
+            return false;
+        } else {
+            document.getElementById("lblEmailC").textContent = "Las email´s coinciden";
+            document.getElementById("lblEmailC").style.color = "green";
+        }
+    }
+
+    function mostrarVistaPrevia(event) {
+        const imagenPrevia = document.getElementById('vistaPrevia');
+
+        const archivo = event.target.files[0];
+
+        const lector = new FileReader();
+
+        lector.onload = function (e) {
+            imagenPrevia.src = e.target.result;
+        };
+
+        lector.readAsDataURL(archivo);
+    }
+
+
+    //JavaScript --- Jquery --- Ajax
+    $(document).ready(function () {
+        $("#ddlPais").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/usuario/GetEstadoByIdPais", // La URL del controlador
+                dataType: "json",
+                data: {IdPais: $("#ddlPais").val()},
+                success: function (estados) {
+                    $("#ddlEstado").empty();
+                    $("#ddlEstado").append('<option value="0">' + 'Seleccione su estado' + '</option>');
+                    debugger;
+                    $.each(estados, function (i, estado) {
+                        $("#ddlEstado").append('<option value="'
+                                + estado.idestado + '">'
+                                + estado.nombre + '</option>');
+                    });
+                },
+                error: function () {
+                    alert("Error al obtener los datos.");
+                }
+            });
+        });
+
+        $("#ddlEstado").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/usuario/GetMunicipioByIdEstado", // La URL del controlador
+                dataType: "json",
+                data: {IdEstado: $("#ddlEstado").val()},
+                success: function (municipios) {
+                    $("#ddlMunicipio").empty();
+                    $("#ddlMunicipio").append('<option value="0">' + 'Seleccione su municipio' + '</option>');
+                    $.each(municipios, function (i, municipio) {
+                        $("#ddlMunicipio").append('<option value="'
+                                + municipio.idMunicipio + '">'
+                                + municipio.nombre + '</option>');
+                    });
+                },
+                error: function () {
+                    alert("Error al obtener los datos.");
+                }
+            });
+        });
+
+        $("#ddlMunicipio").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/usuario/GetColoniaByIdMunicipio", // La URL del controlador
+                dataType: "json",
+                data: {IdMunicipio: $("#ddlMunicipio").val()},
+                success: function (colonias) {
+                    $("#ddlColonia").empty();
+                    $("#ddlColonia").append('<option value="0">' + 'Seleccione su colonia' + '</option>');
+                    $.each(colonias, function (i, colonia) {
+                        $("#ddlColonia").append('<option value="'
+                                + colonia.idcolonia + '">'
+                                + colonia.nombre + '</option>');
+                    });
+                },
+                error: function () {
+                    alert("Error al obtener los datos.");
+                }
+            });
+        });
+
+    });
+
+
+
+
+</script>

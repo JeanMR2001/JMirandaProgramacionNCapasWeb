@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
+      layout:decorate="~{layout}">
+
+    <body layout:fragment="body">
+        <br/>
+        <br/>
+        <div class="card bg-success text-white">
+            <h1 class="card-header" align="center">FORM EMPRESA</h1>
+
+        </div>
+        <br/>
+        <h1 align="center">Datos de la Empresa</h1>
+        <hr>
+        <br>
+        <br>
+
+        <form th:action="@{/empresa/form}" method="post" th:object="${empresa}" enctype="multipart/form-data">
+
+            <input type="hidden" th:field="*{idempresa}"/>
+
+            <div class="container">
+                <div class="row" align="center">
+
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Nombre de la empresa" onblur="validarCampo('nombre', 'lblNombre')" id="nombre" name="nombre" th:field="*{nombre}"/>
+                        </div>
+                        <label id="lblNombre"></label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Telefono" onkeypress="return validarNumeros(event, 'telefono', 'lblTelefono')" id="telefono" name="telefono" th:field="*{telefono}"/>
+                        </div>
+                        <label id="lblTelefono"></label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <label for="imagenFile">Image:-</label>
+                            <input type="file" class="form-control" name="imagenFile" id="imagenFile" onchange="mostrarVistaPrevia(event)">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" placeholder="E-mail" onblur="validarCampo('email', 'lblEmail')" id="email" name="email" th:field="*{email}"/>
+                        </div>
+                        <label id="lblEmail"></label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Direccion Web"  id="direccionweb" name="direccionweb" th:field="*{direccionweb}"/>
+                        </div>
+                        <label id="lblDireccionWeb"></label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <i class="bi bi-file-image-fill"></i>
+                            <div th:if="${empresa.imagen != null}">
+                                <img id="vistaPrevia" th:src="'data:text/html;base64,' + ${empresa.imagen}" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;">
+                            </div>
+                            <div th:unless="${empresa.imagen != null}">
+                                <img id="vistaPrevia" src="/Image/default.png" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <input type="submit" value="Guardar" class="btn btn-outline-success"/>
+            </div>
+        </form>
+
+    </body>
+</html>
+
+<script>
+    function mostrarVistaPrevia(event) {
+        const imagenPrevia = document.getElementById('vistaPrevia');
+
+        const archivo = event.target.files[0];
+
+        const lector = new FileReader();
+
+        lector.onload = function (e) {
+            imagenPrevia.src = e.target.result;
+        };
+
+        lector.readAsDataURL(archivo);
+    }
+</script>
