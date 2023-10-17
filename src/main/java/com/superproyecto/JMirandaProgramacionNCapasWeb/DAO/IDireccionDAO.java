@@ -19,6 +19,8 @@ public interface IDireccionDAO {
     
     void Update(Direccion direccion);
     
+    void Delete(Direccion direccion);
+    
     Direccion GetById(int idusuarioE);
     
 //    Direccion Delete(int iddireccion);

@@ -70,6 +70,13 @@ public class DireccionDAOImplementation implements IDireccionDAO{
         entityManager.merge(direccion);
     }
     
+    @Override
+    @Transactional
+    public void Delete(Direccion direccion) {
+        
+        entityManager.remove(direccion);
+    }
+    
     
     
 }
