@@ -1,0 +1,3 @@
+numeroempleado|nombre|apellidopaterno|apellidomaterno|email|telefono|nss|rfc|fechanacimiento|fechaingreso|idemperesa
+JPR237|Jeansito|Motopapi|Miranda|jeansito@gmail.com|7775981175|1234567|MIRJ0101025LA|2001-02-01|2023-06-06|1
+CAM07|Camila|Escudero|Rendon|camilukisgmail.com|7875784903|12456784|12345J23|2010-05-25|2023-02-23|1

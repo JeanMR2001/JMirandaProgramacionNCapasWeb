@@ -61,7 +61,14 @@ public class EmpleadoDAOImplementation implements IEmpleadoDAO{
         TypedQuery<Empleado> query = entityManager.createQuery("FROM Empleado WHERE numeroempleado =: id", Empleado.class);
         query.setParameter("id", numeroEmpleado);
         
-        Empleado empleado = query.getSingleResult();
+        Empleado empleado;
+        
+        try{
+           empleado = query.getSingleResult();
+       } catch(Exception ex) {
+           
+           empleado = new Empleado();
+       }
         return empleado;
     }
     

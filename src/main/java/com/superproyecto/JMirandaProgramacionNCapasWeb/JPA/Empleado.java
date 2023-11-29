@@ -6,6 +6,8 @@ package com.superproyecto.JMirandaProgramacionNCapasWeb.JPA;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
@@ -23,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Empleado {
     
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String numeroempleado;
     
     @Basic
@@ -163,6 +166,11 @@ public class Empleado {
     public void setFechanacimiento(Date fechanacimiento) {
         this.fechanacimiento = fechanacimiento;
     }
+
+    public Empleado(String numeroempleado) {
+        this.numeroempleado = numeroempleado;
+    }
+    
     
     
     

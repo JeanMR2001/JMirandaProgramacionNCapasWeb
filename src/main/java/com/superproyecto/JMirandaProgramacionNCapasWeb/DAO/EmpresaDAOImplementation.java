@@ -48,6 +48,7 @@ public class EmpresaDAOImplementation implements IEmpresaDAO{
     }
 
     @Override
+    @Transactional
     public void Delete(Empresa empresa) {
         entityManager.remove(empresa);
     }

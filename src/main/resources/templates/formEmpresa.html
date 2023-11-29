@@ -22,17 +22,19 @@
             <input type="hidden" th:field="*{idempresa}"/>
 
             <div class="container">
-                <div class="row" align="center">
+                <div class="row">
 
                     <div class="col-md-4">
+                        <label>Nombre Empresa:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
-                            <input type="text" class="form-control" placeholder="Nombre de la empresa" onblur="validarCampo('nombre', 'lblNombre')" id="nombre" name="nombre" th:field="*{nombre}"/>
+                            <input type="text" class="form-control" placeholder="Nombre de la empresa" onkeypress="return sololetras(event, 'lblNombre')" onblur="validarCampo('nombre', 'lblNombre')" id="nombre" name="nombre" th:field="*{nombre}"/>
                         </div>
                         <label id="lblNombre"></label>
                     </div>
 
                     <div class="col-md-4">
+                        <label>Telefono:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
                             <input type="text" class="form-control" placeholder="Telefono" onkeypress="return validarNumeros(event, 'telefono', 'lblTelefono')" id="telefono" name="telefono" th:field="*{telefono}"/>
@@ -54,6 +56,7 @@
                 <div class="row">
 
                     <div class="col-md-4">
+                        <label>E-mail:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">@</span>
                             <input type="text" class="form-control" placeholder="E-mail" onblur="validarCampo('email', 'lblEmail')" id="email" name="email" th:field="*{email}"/>
@@ -62,9 +65,10 @@
                     </div>
 
                     <div class="col-md-4">
+                        <label>Direccion Web:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
-                            <input type="text" class="form-control" placeholder="Direccion Web"  id="direccionweb" name="direccionweb" th:field="*{direccionweb}"/>
+                            <input type="text" class="form-control" placeholder="Direccion Web"  id="direccionweb" onblur="validarCampo('direccionweb', 'lblDireccionWeb')" name="direccionweb" th:field="*{direccionweb}"/>
                         </div>
                         <label id="lblDireccionWeb"></label>
                     </div>
@@ -104,5 +108,52 @@
         };
 
         lector.readAsDataURL(archivo);
+    }
+    
+    function sololetras(e, lbl) {
+        var letters = /^[A-Za-z ]+$/;
+        var key = e.key;
+        if (key.match(letters))
+        {
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else {
+            document.getElementById(lbl).innerHTML = "Solo letras";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+    
+    function validarCampo(name, lbl) {
+        var valorCampo = document.getElementById(name).value;
+
+        if (valorCampo.trim() == "") {
+
+            document.getElementById(lbl).textContent = "Este campo no puede estar vacío";
+            document.getElementById(lbl).style.color = "red";
+            return false;
+        } else {
+
+            document.getElementById(lbl).textContent = "";
+            return true;
+        }
+    }
+    
+    function validarNumeros(evt, name, lbl) {
+
+        // code is the decimal ASCII representation of the pressed key.
+        var code = (evt.which) ? evt.which : evt.keyCode;
+        var phoneNumber = document.getElementById(name).value;
+
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57 && phoneNumber.length < 10) { // is a number.
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else { // other keys.
+            document.getElementById(lbl).innerHTML = "Solo puede ingresar números y un máximo de 10 digitos";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
     }
 </script>

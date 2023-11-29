@@ -6,9 +6,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
       layout:decorate="~{layout}">
-    
+
     <body layout:fragment="body">
-        
+
         <br/>
         <br/>
         <div class="card bg-info text-white">
@@ -16,43 +16,46 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
         </div>
         <br/>
-        
+
         <div class="d-grid gap-2 col-6 mx-auto">
-            <a th:href="@{/empleado/form/{numeroempleado}(numeroempleado='new')}" class="btn btn-success">Add
+            <a th:href="@{/empleado/form/{numeroempleado}(numeroempleado='new')}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Agregar Empleado
             </a>
         </div>
-        
+
         <br>
         <div class="container">
-        <table class="table table-dark table-striped" align="center">
-            
-            <thead>
-                <tr>
-                    <th scope="col">Delete</th>
-                    <th scope="col">Num.Empleado</th>
-                    <th scope="col">Foto</th>
-                    <th scope="col">Nombre Completo</th>
-                    <th scope="col">FechaNacimiento</th>
-                    <th scope="col">RFC</th>
-                    <th scope="col">NSS</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Telefono</th>
-                    <th scope="col">FechaIngreso</th>
-                    <th scope="col">Empresa</th>
-                    <th scope="col">Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="empleado, iterStat : ${lempleados}">
-                    <td>
-                        <!--                        <i class="bi bi-trash-fill"></i>-->
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" th:data-bs-target="'#exampleModal' + ${iterStat.index}">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </td>
-                    <td th:text="${empleado.numeroempleado}"></td>
-                    <td>
+
+
+            <table id="myTable" class="table table-striped table-dark" align="center">
+
+                <thead>
+                    <tr>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Num.Empleado</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Nombre Completo</th>
+                        <th scope="col">FechaNacimiento</th>
+                        <th scope="col">RFC</th>
+                        <th scope="col">NSS</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">FechaIngreso</th>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Asignar Dep</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="empleado, iterStat : ${lempleados}">
+                        <td>
+                            <!--                        <i class="bi bi-trash-fill"></i>-->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" th:data-bs-target="'#exampleModal' + ${iterStat.index}">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </td>
+                        <td th:text="${empleado.numeroempleado}"></td>
+                        <td>
                             <div th:if="${empleado.foto != null}">
                                 <img th:src="'data:text/html;base64,' + ${empleado.foto}" alt="Foto de usuario" width="70" height="auto"/>
                             </div>
@@ -60,47 +63,63 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <img src="/Image/default.png" width="70" height="auto"/> 
                             </div>
                         </td>
-                    <td th:text="${empleado.nombre + ' ' + empleado.apellidopaterno + ' ' + empleado.apellidomaterno}"></td>
-                    <td th:text="${empleado.fechanacimiento}"></td>
-                    <td th:text="${empleado.rfc}"></td>
-                    <td th:text="${empleado.nss}"></td>
-                    <td th:text="${empleado.email}"></td>
-                    <td th:text="${empleado.telefono}"></td>
-                    <td th:text="${empleado.fechaingreso}"></td>
-                    <td>
-                        <span th:each="empresa : ${lempresas}"
+                        <td th:text="${empleado.nombre + ' ' + empleado.apellidopaterno + ' ' + empleado.apellidomaterno}"></td>
+                        <td th:text="${empleado.fechanacimiento}"></td>
+                        <td th:text="${empleado.rfc}"></td>
+                        <td th:text="${empleado.nss}"></td>
+                        <td th:text="${empleado.email}"></td>
+                        <td th:text="${empleado.telefono}"></td>
+                        <td th:text="${empleado.fechaingreso}"></td>
+                        <td>
+                            <span th:each="empresa : ${lempresas}"
                                   th:if="${empresa.idempresa == empleado.empresa.idempresa}">
-                            <span th:text="${empresa.nombre}"></span>
+                                <span th:text="${empresa.nombre}"></span>
                             </span>
-                    </td>
-                    <td>
-                        <a th:href="@{/empleado/form/{numeroempleado}(numeroempleado=${empleado.numeroempleado})}" class="btn btn-outline-warning">
+                        </td>
+                        <td>
+                            <a th:href="@{/empleado/form/{numeroempleado}(numeroempleado=${empleado.numeroempleado})}" class="btn btn-outline-warning">
 
-                            <i class="bi bi-pencil-fill"i></
-                        </a>
-                    </td>
-                    
-                    <div class="modal fade" th:id="'exampleModal' + ${iterStat.index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro?</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>¿Estas seguro de querer eliminar al empleado: <span th:text="${empleado.nombre}"></span>?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <a th:href="@{/empleado/eliminar/{numeroempleado}(numeroempleado=${empleado.numeroempleado})}" class="btn btn-danger">Confirmar</a>
-                                </div>
+                                <i class="bi bi-pencil-fill"i></
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/dependiente/listado/{numeroempleado}(numeroempleado=${empleado.numeroempleado})}" class="btn btn-outline-info">
+
+                                <i class="bi bi-check2-square"></i></
+                            </a>
+                        </td>
+
+                <div class="modal fade" th:id="'exampleModal' + ${iterStat.index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Estas seguro de querer eliminar al empleado: <span th:text="${empleado.nombre}"></span>?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <a th:href="@{/empleado/eliminar/{numeroempleado}(numeroempleado=${empleado.numeroempleado})}" class="btn btn-danger">Confirmar</a>
                             </div>
                         </div>
                     </div>
+                </div>
                 </tr>
-                
-            </tbody>
-        </table>
-        
+
+                </tbody>
+            </table>
+
     </body>
 </html>
+<script>
+    
+//        $(document).ready(function () {
+//        $('#myTable').DataTable();
+//    });
+
+    new DataTable('#myTable', {
+        scrollX: true
+    });
+</script>

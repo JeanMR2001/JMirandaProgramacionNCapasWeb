@@ -19,6 +19,7 @@ import com.superproyecto.JMirandaProgramacionNCapasWeb.JPA.Rol;
 import com.superproyecto.JMirandaProgramacionNCapasWeb.JPA.Usuario;
 import com.superproyecto.JMirandaProgramacionNCapasWeb.JPA.UsuarioDireccion;
 import com.superproyecto.JMirandaProgramacionNCapasWeb.Util.Util;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -72,13 +73,17 @@ public class UsuarioController {
 
     //localhost:8080/usuario/listado
     @GetMapping("/listado")
-    private String listadoUsuarios(Model model) {
+    private String listadoUsuarios(Model model, HttpSession session) {
 
+        Usuario usuarioLog = (Usuario)session.getAttribute("userLOGIN");
+        
         Usuario usuario = new Usuario();
         usuario.setNombre("");
         usuario.setApellidopaterno("");
         usuario.setApellidomaterno("");
 
+        model.addAttribute("usuariologueado", usuarioLog);
+        
         List<Usuario> usuarios = usuarioDAOImplementation.GetAll(usuario);
         model.addAttribute("lusuarios", usuarios);
         model.addAttribute("usuariobusqueda", new Usuario());

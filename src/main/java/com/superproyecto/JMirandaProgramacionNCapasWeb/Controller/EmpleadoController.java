@@ -76,7 +76,9 @@ public class EmpleadoController {
         String imagen64 = Util.ConvertirBase64(imagenFile);
         empleado.setFoto(imagen64);
         
-        if(empleado.getNumeroempleado() != "new"){
+        Empleado empleadob = empleadoDAOImplementation.GetById(empleado.getNumeroempleado());
+        
+        if(empleadob.getNumeroempleado() != null){
             empleadoDAOImplementation.Update(empleado);
         } else {
             empleadoDAOImplementation.Add(empleado);
@@ -85,15 +87,25 @@ public class EmpleadoController {
         return ("redirect:/empleado/listado");
     }
     
-    @GetMapping("/eiminar/{numeroempleado}")
-    public String Delete(@PathVariable String numeroEmpleado, Model model){
+    @GetMapping("/eliminar/{numeroempleado}")
+    public String Delete(@PathVariable String numeroempleado, Model model){
         
-        Empleado empleado = empleadoDAOImplementation.GetById(numeroEmpleado);
+        Empleado empleado = empleadoDAOImplementation.GetById(numeroempleado);
         model.addAttribute("empleado", empleado);
         
         empleadoDAOImplementation.Delete(empleado);
         
         return "redirect:/empleado/listado";
+    }
+    
+    @GetMapping("/dependient/{numeroempleado}")
+    public String Dependiente(@PathVariable String numeroempleado, Model model){
+
+        Empleado empleado = empleadoDAOImplementation.GetById(numeroempleado);
+        
+        model.addAttribute("empleado", empleado);
+        
+        return "formDependientes";
     }
     
     

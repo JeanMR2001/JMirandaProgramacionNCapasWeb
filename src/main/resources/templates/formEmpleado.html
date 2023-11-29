@@ -17,35 +17,44 @@
 
         <form th:action="@{/empleado/form}" method="post" th:object="${empleado}" enctype="multipart/form-data">
 
-            <input type="hidden" th:field="*{numeroempleado}"/>
+<!--            <input type="hidden" th:field="*{numeroempleado}"/>-->
 
             <div class="container">
-                <div class="row" align="center">
-                    
-                    <div class="col-md-2">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <label>Numero Empleado:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
-                            <input type="text" class="form-control" placeholder="Numero de Empleado" id="numeroempleado" name="numeroempleado" th:field="*{numeroempleado}"/>
+<!--                            <div th:if="${numeroempleado == null}">-->
+                                <input type="text" class="form-control" placeholder="Numero de Empleado" id="numeroempleado" name="numeroempleado" th:field="*{numeroempleado}"/>
+<!--                            </div>
+                            <div th:unless="${numeroempleado == null}">
+                                <input type="text" class="form-control" placeholder="Numero de Empleado" id="numeroempleado" name="numeroempleado" th:field="*{numeroempleado}" th:readonly="${numeroempleado != null}"/>
+                            </div>-->
                         </div>
-                    </div>
+                    </div>                    
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <label>Nombre:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
                             <input type="text" class="form-control" placeholder="Nombre del Empleado" onkeypress="return sololetras(event, 'lblNombre')" onblur="validarCampo('nombre', 'lblNombre')" id="nombre" name="nombre" th:field="*{nombre}"/>
                         </div>
                         <label id="lblNombre"></label>
                     </div>
-                   
-                    <div class="col order-last">
+
+                    <div class="col-md-3">
+                        <label>Apellido Paterno:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-vcard-fill"></i></span>
                             <input type="text" class="form-control" placeholder="Apellido Paterno" onkeypress="return sololetras(event, 'lblApellidoP')" onblur="validarCampo('apellidopaterno', 'lblApellidoP')" id="apellidopaterno" name="apellidopaterno" th:field="*{apellidopaterno}"/>
                         </div>
                         <label id="lblApellidoP"></label>
                     </div>
-                    
-                    <div class="col order-last">
+
+                    <div class="col-md-3">
+                        <label>Apellido Materno:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-vcard-fill"></i></span>
                             <input type="text" class="form-control" placeholder="Apellido Materno" onkeypress="return sololetras(event, 'lblApellidoM')" onblur="validarCampo('apellidomaterno', 'lblApellidoM')" id="apellidomaterno" name="apellidomaterno" th:field="*{apellidomaterno}"/>
@@ -58,27 +67,29 @@
 
             <div class="container">
                 <div class="row">
-                                        
+
                     <div class="col-md-4">
+                        <label>Telefono:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
-                            <input type="text" class="form-control" placeholder="Telefono" onkeypress="return validarNumeros(event, 'telefono', 'lblTelefono')" id="telefono" name="telefono" th:field="*{telefono}"/>
+                            <input type="text" class="form-control" placeholder="Telefono" onkeypress="return validarNumeros(event, 'telefono', 'lblTelefono')" onblur="validarCampo('telefono', 'lblTelefono') id="telefono" name="telefono" th:field="*{telefono}"/>
                         </div>
                         <label id="lblTelefono"></label>
                     </div>
 
                     <div class="col-md-4">
+                        <label>E-mail:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">@</span>
                             <input type="text" class="form-control" placeholder="E-mail" onblur="validarCampo('email', 'lblEmail')" id="email" name="email" th:field="*{email}"/>
                         </div>
                         <label id="lblEmail"></label>
                     </div>
-                    
+
                     <div class="col-md-4">
                         <label>Fecha Nacimiento:</label>
                         <div class="input-group mb-3">
-                            
+
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar-week"></i></span>
                             <input type="date" class="form-control" placeholder="Fecha de Nacimiento" onblur="validarCampo('fechanacimiento', 'lblFecha')" id="fechanacimiento" name="fechanacimiento" th:field="*{fechanacimiento}"/>
                         </div>
@@ -86,26 +97,28 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="container">
                 <div class="row">
-                    
+
                     <div class="col-md-4">
+                        <label>RFC:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-journal-text"></i></span>
                             <input type="text" class="form-control" placeholder="RFC" onblur="validarCampo('rfc', 'lblRfc')" id="rfc" name="rfc" th:field="*{rfc}"/>
                         </div>
                         <label id="lblRfc"></label>
                     </div>
-                    
+
                     <div class="col-md-4">
+                        <label>NSS:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-journal-text"></i></span>
                             <input type="text" class="form-control" placeholder="NSS" id="nss" name="nss" th:field="*{nss}"/>
                         </div>
                         <label id="lblNss"></label>
                     </div>
-                    
+
                     <div class="col-md-4">
                         <label>Fecha de Ingreso a la Empresa:</label>
                         <div class="input-group mb-4">
@@ -114,14 +127,15 @@
                         </div>
                         <label id="lblFechaI"></label>
                     </div>
-                    
+
                 </div>
             </div>
-            
+
             <div class="container">
                 <div class="row">
-                    
+
                     <div class="col-md-4">
+                        <label>Empresa:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-asterisk"></i></span>
                             <select class="form-select" aria-label="Default select example" name="empresa.idempresa" id="ddlPais" th:field="*{empresa.idempresa}">
@@ -132,14 +146,14 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-4">
                         <div class="input-group mb-3">
                             <label for="imagenFile">Photo:-</label>
                             <input type="file" class="form-control" name="imagenFile" id="imagenFile" onchange="mostrarVistaPrevia(event)">
                         </div>
                     </div>
-                    
+
                     <div class="col-md-4">
                         <div class="input-group mb-3">
                             <i class="bi bi-file-image-fill"></i>
@@ -151,7 +165,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -177,9 +191,9 @@
 
         lector.readAsDataURL(archivo);
     }
-    
+
     function sololetras(e, lbl) {
-        var letters = /^[A-Za-z]+$/;
+        var letters = /^[A-Za-z ]+$/;
         var key = e.key;
         if (key.match(letters))
         {
@@ -191,7 +205,7 @@
             return false;
         }
     }
-    
+
     function validarCampo(name, lbl) {
         var valorCampo = document.getElementById(name).value;
 

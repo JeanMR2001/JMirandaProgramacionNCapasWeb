@@ -1,0 +1,214 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
+      layout:decorate="~{layout}">
+
+    <body layout:fragment="body">
+        <br/>
+        <br/>
+        <div class="card bg-success text-white">
+            <h1 class="card-header" align="center">FORM DEPENDIENTE</h1>
+
+        </div>
+        <br>
+        <h1 align="center">Datos del Dependiente</h1>
+        <hr>
+        <div class="d-grid gap-3 d-md-block container">
+            <a class="btn btn-danger" th:href="@{/dependiente/listado/{numeroempleado}(numeroempleado=${dependiente.empleado.numeroempleado})}" role="button"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+        
+        </div>
+        <br>
+        <br>
+        
+        <form th:action="@{/dependiente/form}" method="post" th:object="${dependiente}">
+
+            <input type="hidden" th:field="*{empleado.numeroempleado}" th:value="${dependiente.empleado.numeroempleado}"/>
+
+            <input type="hidden" th:field="*{iddependiente}"/>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <label>Nombre:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Nombre del Dependiente" onkeypress="return sololetras(event, 'lblNombre')" onblur="validarCampo('nombre', 'lblNombre')" id="nombre" name="nombre" th:field="*{nombre}"/>
+                        </div>
+                        <label id="lblNombre"></label>
+                    </div>
+                   
+                    <div class="col order-last">
+                        <label>Apellido Paterno:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-vcard-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Apellido Paterno" onkeypress="return sololetras(event, 'lblApellidoP')" onblur="validarCampo('apellidopaterno', 'lblApellidoP')" id="apellidopaterno" name="apellidopaterno" th:field="*{apellidopaterno}"/>
+                        </div>
+                        <label id="lblApellidoP"></label>
+                    </div>
+                    
+                    <div class="col order-last">
+                        <label>Apellido Materno:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-vcard-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Apellido Materno" onkeypress="return sololetras(event, 'lblApellidoM')" onblur="validarCampo('apellidomaterno', 'lblApellidoM')" id="apellidomaterno" name="apellidomaterno" th:field="*{apellidomaterno}"/>
+                        </div>
+                        <label id="lblApellidoM"></label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                                        
+                    <div class="col-md-4">
+                        <label>Telefono:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
+                            <input type="text" class="form-control" placeholder="Telefono" onkeypress="return validarNumeros(event, 'telefono', 'lblTelefono')" id="telefono" name="telefono" th:field="*{telefono}"/>
+                        </div>
+                        <label id="lblTelefono"></label>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label>RFC:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-journal-text"></i></span>
+                            <input type="text" class="form-control" placeholder="RFC" onblur="validarCampo('rfc', 'lblRfc')" id="rfc" name="rfc" th:field="*{rfc}"/>
+                        </div>
+                        <label id="lblRfc"></label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Género:</label>
+                        <div>                            
+                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" th:value="H" th:field="*{genero}"/>
+                                <label class="btn btn-outline-success" for="success-outlined">Hombre</label>
+                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" th:value="M" th:field="*{genero}"/>
+                                <label class="btn btn-outline-danger" for="danger-outlined">Mujer</label> 
+                            </div>
+<!--                            <div th:unless="${usuariodireccion.usuario.sexo == 'H '}">
+                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}"/>
+                                <label class="btn btn-outline-success" for="success-outlined">Hombre</label>
+                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}" th:checked="${sexoM}"/>
+                                <label class="btn btn-outline-danger" for="danger-outlined">Mujer</label>   
+                            </div>-->
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-md-4">
+                        <label>Fecha Nacimiento:</label>
+                        <div class="input-group mb-3">
+                            
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar-week"></i></span>
+                            <input type="date" class="form-control" placeholder="Fecha de Nacimiento" onblur="validarCampo('fechanacimiento', 'lblFecha')" id="fechanacimiento" name="fechanacimiento" th:field="*{fechanacimiento}"/>
+                        </div>
+                        <label id="lblFecha"></label>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label>Estado Civil:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-asterisk"></i></span>
+                            <select class="form-select" aria-label="Default select example" name="empresa.idempresa" id="ddlPais" th:field="*{estadocivil.idestadocivil}">
+                                <!--                    <option selected>Open this select menu</option>-->
+                                <option value="0">Seleccione su Estado Civil</option>
+                                <option th:each="estadocivil : ${estadosciviles}" th:value="${estadocivil.idestadocivil}" th:text="${estadocivil.nombre}"></option>
+
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label>Tipo Dependiente:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-asterisk"></i></span>
+                            <select class="form-select" aria-label="Default select example" name="empresa.idempresa" id="ddlPais" th:field="*{dependientetipo.iddependientetipo}">
+                                <!--                    <option selected>Open this select menu</option>-->
+                                <option value="0">Seleccione el tipo de Dependiente</option>
+                                <option th:each="deptipo : ${dependientetipos}" th:value="${deptipo.iddependientetipo}" th:text="${deptipo.nombre}"></option>
+
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+<!--            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-asterisk"></i></span>
+                            <select class="form-select" aria-label="Default select example" name="empresa.idempresa" id="ddlPais" th:field="*{empresa.idempresa}">
+                                                    <option selected>Open this select menu</option>
+                                <option value="0">Seleccione la Empresa en la que labora</option>
+                                <option th:each="empresa : ${empresas}" th:value="${empresa.idempresa}" th:text="${empresa.nombre}"></option>
+
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>-->
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <input type="submit" value="Guardar" class="btn btn-outline-success"/>
+            </div>
+        </form>
+    </body>
+</html>
+
+<script>
+ function sololetras(e, lbl) {
+        var letters = /^[A-Za-z ]+$/;
+        var key = e.key;
+        if (key.match(letters))
+        {
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else {
+            document.getElementById(lbl).innerHTML = "Solo letras";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+
+    function validarCampo(name, lbl) {
+        var valorCampo = document.getElementById(name).value;
+
+        if (valorCampo.trim() == "") {
+
+            document.getElementById(lbl).textContent = "Este campo no puede estar vacío";
+            document.getElementById(lbl).style.color = "red";
+            return false;
+        } else {
+
+            document.getElementById(lbl).textContent = "";
+            return true;
+        }
+    }
+    
+    function validarNumeros(evt, name, lbl) {
+
+        var code = (evt.which) ? evt.which : evt.keyCode;
+        var phoneNumber = document.getElementById(name).value;
+
+        if (code == 8) { // backspace.
+            return true;
+        } else if (code >= 48 && code <= 57 && phoneNumber.length < 10) { // is a number.
+            document.getElementById(lbl).innerHTML = "";
+            return true;
+        } else { // other keys.
+            document.getElementById(lbl).innerHTML = "Solo puede ingresar números y un máximo de 10 digitos";
+            $("#" + lbl).css('color', 'red');
+            return false;
+        }
+    }
+</script>

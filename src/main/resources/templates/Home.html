@@ -1,0 +1,33 @@
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
+      layout:decorate="~{layout}">
+
+    <body layout:fragment="body">
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <a class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true" style="margin-top: 10px;">
+                            Te damos la Bienvenida <span th:text="${usuariologueado.nombre + ' ' + usuariologueado.apellidopaterno}"></span>!
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+            </div>
+        </div>
+
+    </body>
+</html>
+
+<style>
+    body {
+        background-image: url('/Image/background.jpg'); /* Ruta de la imagen */
+        background-size: cover; /* Ajusta la imagen para cubrir todo el elemento */
+        background-repeat: no-repeat;
+    }
+</style>

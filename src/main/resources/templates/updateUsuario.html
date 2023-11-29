@@ -101,17 +101,12 @@
                         <div class="input-group mb-3">
                             <!--                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-gender-ambiguous"></i></span>-->
 
-                            <div th:if="${usuariodireccion.usuario.sexo == 'H '}">                            
-                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}" th:checked="${sexoH}"/>
+                            <div>         
+                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" th:value="H" th:field="*{usuario.sexo}"/>
                                 <label class="btn btn-outline-success" for="success-outlined">Hombre</label>
-                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}"/>
+                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" th:value="M" th:field="*{usuario.sexo}"/>
                                 <label class="btn btn-outline-danger" for="danger-outlined">Mujer</label> 
-                            </div>
-                            <div th:unless="${usuariodireccion.usuario.sexo == 'H '}">
-                                <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}"/>
-                                <label class="btn btn-outline-success" for="success-outlined">Hombre</label>
-                                <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" th:value="${usuariodireccion.usuario.sexo}" th:field="*{usuario.sexo}" th:checked="${sexoM}"/>
-                                <label class="btn btn-outline-danger" for="danger-outlined">Mujer</label>   
+
                             </div>
                             <!--                            <div class="btn-group" data-toggle="buttons">
                                                             <label class="btn btn-warning active">
@@ -309,7 +304,7 @@
 
 <script>
     function sololetras(e, lbl) {
-        var letters = /^[A-Za-z]+$/;
+        var letters = /^[A-Za-z ]+$/;
         var key = e.key;
         if (key.match(letters))
         {

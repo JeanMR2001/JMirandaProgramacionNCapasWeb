@@ -4,11 +4,16 @@
  */
 package com.superproyecto.JMirandaProgramacionNCapasWeb.Controller;
 
+import com.superproyecto.JMirandaProgramacionNCapasWeb.JPA.Usuario;
 import com.superproyecto.JMirandaProgramacionNCapasWeb.entity.NumerosOperacion;
 import com.superproyecto.JMirandaProgramacionNCapasWeb.entity.Resultado;
 import com.superproyecto.JMirandaProgramacionNCapasWeb.service.DemoServiceImplementation;
+import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author digis
  */
 
-@RestController
-@RequestMapping("/JeanApi")
+@Controller
+@RequestMapping("/Home")
 public class DemoController {
     
     @PostMapping("/suma")
@@ -57,6 +62,14 @@ public class DemoController {
         Map<String,Object> response = new HashMap<>();
         response.put("saludo", "Te quiero mucho " + numerosOperacion.getNombre());
         return response;
+    }
+    
+    @GetMapping("/welcome")
+    public String Bienvenida(HttpSession session, Model model){
+         Usuario usuarioLog = (Usuario)session.getAttribute("userLOGIN");
+         
+         model.addAttribute("usuariologueado", usuarioLog);
+         return "Home";
     }
     
     

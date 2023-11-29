@@ -1,0 +1,110 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layaout"
+      layout:decorate="~{layout}">
+
+
+
+    <body layout:fragment="body">
+        <br/>
+        <br/>
+        <div class="card bg-secondary text-white">
+            <h1 class="card-header" align="center">Listado Dependientes</h1>
+
+        </div>
+        <br/>
+
+        <div class="d-grid gap-3 d-md-block container">
+            <a class="btn btn-danger" th:href="@{/empleado/listado}" role="button"><i class="bi bi-arrow-return-left"></i> Regresar</a>
+
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <a th:href="@{/dependiente/form/{numeroempleado}/{iddependiente}(iddependiente=0,numeroempleado=${numeroempleado})}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Agregar Dependiente
+            </a>
+        </div>
+
+        <br>
+        <div class="container">
+            <div class="row">
+                <label>Empleado:</label>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" th:value="${empleado.nombre + ' ' + empleado.apellidopaterno + ' ' + empleado.apellidomaterno}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div th:if="${dependientes.empty}">
+                <div class="container">
+                    <div class="alert alert-danger text-center" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill"></i> ¡El empleado no cuenta con Dependientes!
+                    </div>
+                </div>
+            </div>
+            <div th:unless="${dependientes.empty}">
+                <div class="container">
+                    <input type="hidden" th:value="${empleado.numeroempleado}" readonly/>
+                    <table class="table table-dark table-striped" align="center">
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Delete</th>
+                                <th scope="col">Nombre Completo</th>
+                                <th scope="col">FechaNacimiento</th>
+                                <th scope="col">EstadoCvil</th>
+                                <th scope="col">Género</th>
+                                <th scope="col">Telefono</th>
+                                <th scope="col">RFC</th>
+                                <th scope="col">Tipo Dependiente</th>
+                                <th scope="col">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="dependiente, iterStat : ${dependientes}">
+                                <td>
+                                    <!--                        <i class="bi bi-trash-fill"></i>-->
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" th:data-bs-target="'#exampleModal' + ${iterStat.index}">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                                <!--                            <td th:text="${dependiente.iddependiente}"></td>-->
+                                <td th:text="${dependiente.nombre + ' ' + dependiente.apellidopaterno + ' ' + dependiente.apellidomaterno}"></td>
+                                <td th:text="${dependiente.fechanacimiento}"></td>
+                                <td th:text="${dependiente.estadocivil.nombre}"></td>
+                                <td th:text="${dependiente.genero}"></td>
+                                <td th:text="${dependiente.telefono}"></td>
+                                <td th:text="${dependiente.rfc}"></td>
+                                <td th:text="${dependiente.dependientetipo.nombre}"></td>
+
+                                <td>
+                                    <a th:href="@{/dependiente/form/{numeroempleado}/{iddependiente}(iddependiente=${dependiente.iddependiente},numeroempleado=${numeroempleado})}" class="btn btn-outline-warning">
+
+                                        <i class="bi bi-pencil-fill"i></
+                                    </a>
+                                </td>
+
+                        <div class="modal fade" th:id="'exampleModal' + ${iterStat.index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">¿Estas seguro?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Estas seguro de querer eliminar al dependiente: <span th:text="${dependiente.nombre}"></span>?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <a th:href="@{/dependiente/eliminar/{iddependiente}(iddependiente=${dependiente.iddependiente})}" class="btn btn-danger">Confirmar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </body>
+</html>

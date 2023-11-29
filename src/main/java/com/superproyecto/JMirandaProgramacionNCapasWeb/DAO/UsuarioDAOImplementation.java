@@ -4,6 +4,7 @@
  */
 package com.superproyecto.JMirandaProgramacionNCapasWeb.DAO;
 
+import com.superproyecto.JMirandaProgramacionNCapasWeb.JPA.Direccion;
 import com.superproyecto.JMirandaProgramacionNCapasWeb.JPA.Rol;
 import com.superproyecto.JMirandaProgramacionNCapasWeb.JPA.Usuario;
 import jakarta.persistence.EntityManager;
@@ -79,6 +80,25 @@ public class UsuarioDAOImplementation implements IUsuarioDAO {
            
         usuario.setStatus((status)? 1 : 0);
         entityManager.merge(usuario);
+        
+    }
+
+    @Override
+    public Usuario GetByEmail(String email) {
+        
+        TypedQuery<Usuario> query = entityManager.createQuery("FROM Usuario WHERE email =: emailbusq", Usuario.class);
+        query.setParameter("emailbusq", email);
+        
+        Usuario usuario;
+        
+        try{
+           usuario = query.getSingleResult();
+       } catch(Exception ex) {
+           
+           usuario = new Usuario();
+       }
+        
+        return usuario;
         
     }
 
